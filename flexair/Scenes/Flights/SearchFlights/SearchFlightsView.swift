@@ -14,14 +14,27 @@ struct SearchFlightsView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(spacing: 24) {
                 VStack(spacing: 12) {
-                    // From
-                    SearchFlightButtonView(title: "From", userInput: fromWhere) {
+                    ZStack(alignment: .trailing) {
+                        VStack(spacing: 12) {
+                            // From
+                            SearchFlightButtonView(title: "From", userInput: fromWhere) {
+                                
+                            }
+                            // To where
+                            SearchFlightButtonView(title: "To", userInput: toWhere) {
+                                
+                            }
+                        }
                         
-                    }
-                    // To where
-                    SearchFlightButtonView(title: "To", userInput: toWhere) {
+                        Button {
+                            //
+                        } label: {
+                            Image(systemName: "arrow.up.arrow.down")
+                        }
+                        .buttonStyle(ArrowButtonStyle())
+                        .padding(.horizontal, 12)
                         
                     }
                     
