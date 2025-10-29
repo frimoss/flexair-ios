@@ -28,15 +28,15 @@ struct SearchFlightButtonView: View {
                     if !userInput.isEmpty {
                         Text(title)
                             .foregroundStyle(Constants.Colors.textSecondary)
-                            .font(.custom(Constants.Fonts.regular, size: 12))
+                            .font(.system(size: 13, weight: .regular))
                         
                         Text(userInput)
                             .foregroundStyle(Constants.Colors.textPrimary)
-                            .font(.custom(Constants.Fonts.medium, size: 14))
+                            .font(.system(size: 15, weight: .medium))
                     } else {
                         Text(title)
                             .foregroundStyle(isPrimaryColor ? Constants.Colors.textPrimary : Constants.Colors.textSecondary)
-                            .font(.custom(Constants.Fonts.medium, size: 14))
+                            .font(.system(size: 14, weight: .medium))
                     }
                 }
                 Spacer()

@@ -14,7 +14,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             // Font Size
-            .font(.custom(Constants.Fonts.regular, size: 17)) // TODO: Change Font Size
+            .font(.system(size: 18, weight: .regular))
         
             // Styles
             .frame(maxWidth: .infinity)
