@@ -2,7 +2,7 @@
 //  AirportModel.swift
 //  flexair
 //
-//  Created by user on 21/11/2025.
+//  Created by Nikolai on 21/11/2025.
 //
 
 import Foundation
