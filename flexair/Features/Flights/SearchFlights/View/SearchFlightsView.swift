@@ -11,11 +11,11 @@ struct SearchFlightsView: View {
     
     @State private var departure: String = "Istanbul, IST"
     @State private var destination: String = ""
+    @State private var selectedDate = Date()
     
     @State private var showAirportListDeparture = false
     @State private var showAirportListDestination = false
-
-    @State private var showTravelDates = false
+    @State private var showDatePicker = false
     
     @State private var showPassengers = false
     
@@ -50,7 +50,7 @@ struct SearchFlightsView: View {
                         HStack(spacing: 12) {
                             // Travel Dates
                             SearchFlightButtonView(title: "Travel dates", image: "Calendar") {
-                                
+                                showDatePicker = true
                             }
                             // Passenger
                             SearchFlightButtonView(title: "1 pass, Economy", image: "Passenger", isPrimaryColor: true) {
@@ -78,6 +78,9 @@ struct SearchFlightsView: View {
             }
             .sheet(isPresented: $showAirportListDestination) {
                 AirportListView(navTitle: "To", userInput: $destination)
+            }
+            .sheet(isPresented: $showDatePicker) {
+                DatePickerView(selectedDate: $selectedDate)
             }
             .navigationBarBackButtonHidden()
             .background(Constants.Colors.backgroundApp)
