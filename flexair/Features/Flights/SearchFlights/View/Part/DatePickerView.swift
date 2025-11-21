@@ -11,18 +11,18 @@ struct DatePickerView: View {
     
     @Binding var selectedDate: Date
     
-    @State var todayDate = Date()
+    @State var currentDate = Date()
 
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-                DatePicker("Select Date", selection: $todayDate, in: Date.now..., displayedComponents: .date)
+                DatePicker("Select Date", selection: $currentDate, in: Date.now..., displayedComponents: .date)
                     .datePickerStyle(.graphical)
                 
                 Button("Select a date") {
-                    selectedDate = todayDate
+                    selectedDate = currentDate
                     print("selectedDate: \(selectedDate)")
                     dismiss()
                 }
