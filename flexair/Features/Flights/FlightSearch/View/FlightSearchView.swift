@@ -1,5 +1,5 @@
 //
-//  SearchFlightsView.swift
+//  FlightSearchView.swift
 //  flexair
 //
 //  Created by Nikolai on 25/10/2025.
@@ -7,15 +7,18 @@
 
 import SwiftUI
 
-struct SearchFlightsView: View {
-    
+struct FlightSearchView: View {
+
     @State private var departure: String = "Istanbul, IST"
     @State private var destination: String = ""
     @State private var selectedDate = Date()
+    @State private var selectedDateText = "Travel dates"
     
+    // Flags
     @State private var showAirportListDeparture = false
     @State private var showAirportListDestination = false
     @State private var showDatePicker = false
+    @State private var isDateSelected = false
     
     @State private var showPassengers = false
     
@@ -49,11 +52,11 @@ struct SearchFlightsView: View {
                         
                         HStack(spacing: 12) {
                             // Travel Dates
-                            SearchFlightButtonView(title: "Travel dates", image: "Calendar") {
+                            SearchFlightButtonView(title: selectedDateText, image: "Calendar", isPrimaryColor: isDateSelected) {
                                 showDatePicker = true
                             }
                             // Passenger
-                            SearchFlightButtonView(title: "1 pass, Economy", image: "Passenger", isPrimaryColor: true) {
+                            SearchFlightButtonView(title: "1 passenger", image: "Passenger", isPrimaryColor: false) {
                                 
                             }
                         }
@@ -80,7 +83,7 @@ struct SearchFlightsView: View {
                 AirportListView(navTitle: "To", userInput: $destination)
             }
             .sheet(isPresented: $showDatePicker) {
-                DatePickerView(selectedDate: $selectedDate)
+                DatePickerView(selectedDate: $selectedDate, selectedDateText: $selectedDateText, isDateSelected: $isDateSelected)
             }
             .navigationBarBackButtonHidden()
             .background(Constants.Colors.backgroundApp)
@@ -89,5 +92,5 @@ struct SearchFlightsView: View {
 }
 
 #Preview {
-    SearchFlightsView()
+    FlightSearchView()
 }
