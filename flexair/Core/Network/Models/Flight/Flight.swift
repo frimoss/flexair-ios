@@ -16,7 +16,7 @@ struct Flight: Identifiable, Decodable {
     let destinationName: String
     let departureTime: Date
     let arrivalTime: Date
-    let price: Double
+    let price: Int
     let availableSeats: Int
     let airline: String
     
