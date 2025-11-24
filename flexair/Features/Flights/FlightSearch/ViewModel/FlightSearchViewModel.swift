@@ -36,9 +36,11 @@ final class FlightSearchViewModel: FlightSearchViewModelProtocol {
                 origin: origin,
                 destination: destination,
                 departureDate: departureDate)
+            
         } catch let error as NetworkError {
             errorMessage = error.errorDescription
             flights = []
+            
         } catch {
             errorMessage = "Search Failed"
             flights = []

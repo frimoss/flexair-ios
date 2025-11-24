@@ -54,9 +54,8 @@ class NetworkService {
             // ✅ Success! Decode the data
             do {
                 let decoder = JSONDecoder()
-                
-                //decoder.dateDecodingStrategy = .iso8601 // For Dates like "2025-11-22" (with Time Zone)
-                // MARK: - DateFormatter (remove Time Zone) - Backend stores dates without time zone
+            
+                // MARK: DateFormatter (remove Time Zone) - Backend stores Dates without Time Zone
                 decoder.dateDecodingStrategy = .custom { decoder in
                     let container = try decoder.singleValueContainer()
                     let dateString = try container.decode(String.self)
@@ -65,7 +64,7 @@ class NetworkService {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                     formatter.locale = Locale(identifier: "en_US_POSIX")
-                    formatter.timeZone = TimeZone(secondsFromGMT: 0) // Treat as UTC
+                    formatter.timeZone = TimeZone(secondsFromGMT: 0)
                     
                     if let date = formatter.date(from: dateString) {
                         return date

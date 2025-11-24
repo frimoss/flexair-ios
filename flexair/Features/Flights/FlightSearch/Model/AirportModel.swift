@@ -15,11 +15,7 @@ struct Airport: Codable, Identifiable, Hashable {
     let country: String
     
     var displayName: String {
-        "\(city) (\(code))"
-    }
-    
-    var fullName: String {
-        "\(name), \(city), \(country)"
+        "\(city), \(code)"
     }
 }
 
