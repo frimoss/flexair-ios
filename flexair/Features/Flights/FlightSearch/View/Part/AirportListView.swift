@@ -9,17 +9,19 @@ import SwiftUI
 
 struct AirportListView: View {
     
-    var navTitle: String
-    @Binding var userInput: String
+    // MARK: - Public
+    @Binding var selected: Airport?
+    var title: String
     
+    // MARK: - Private
     @State private var searchText = ""
-
+    
+    private let airports: [Airport] = airportData
+    
     @Environment(\.dismiss) private var dismiss
     
-    let airports: [Airport] = airportData
-    
     // Filtered result (computed each time search changes)
-    var filteredAirports: [Airport] {
+    private var filteredAirports: [Airport] {
         if searchText.isEmpty {
             return airports //[]
         } else {
@@ -35,7 +37,7 @@ struct AirportListView: View {
             VStack {
                 List(filteredAirports) { airport in
                     Button {
-                        userInput = "\(airport.city), \(airport.code)"
+                        selected = airport
                         dismiss()
                     } label: {
                         HStack(alignment: .center) {
@@ -64,7 +66,7 @@ struct AirportListView: View {
                 .scrollContentBackground(.hidden)
             }
             .searchable(text: $searchText, prompt: "City, country")
-            .navigationTitle(navTitle)
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
