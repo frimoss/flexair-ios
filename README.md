@@ -2,6 +2,8 @@
 
 A flight booking and management system with database backend and mobile interface(IOS GUI).
 
+![screenshots](app-shots/)
+
 ## 📋 Project Information
 
 - **Course**: CMPE344 - Database Management Systems and Programming II
