@@ -2,7 +2,7 @@
 
 A flight booking and management system with database backend and mobile interface(IOS GUI).
 
-![screenshots](app-shots/)
+![screenshots](app-shots/IMG_7903.JPEG)
 
 ## 📋 Project Information
 
