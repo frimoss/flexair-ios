@@ -9,9 +9,23 @@ import SwiftUI
 
 struct FlightBookingView: View {
     
-    @State var hasRefund: Bool = false
-    @State var hasBaggage: Bool = false
+    //@State private var bookingVM = FlightBookingViewModel()
     
+    // MARK: - Public
+    let booking: Flight
+    
+    // MARK: - Private
+    //@State private var totalPrice: Int = 0
+    @State private var passengerName = ""
+    @State private var passenger: Passenger? = nil
+    
+    private var totalPrice: Int {
+        booking.price + (hasBaggage ? booking.baggagePrice : 0) + (hasRefund ? booking.refundPrice : 0)
+    }
+
+    // Flags
+    @State private var hasBaggage: Bool = false
+    @State private var hasRefund: Bool = false
     @State private var showPassengers: Bool = false
     
     private let titleSize: CGFloat = 15
@@ -24,7 +38,11 @@ struct FlightBookingView: View {
                     
                     // MARK: - Price
                     VStack(spacing: 4) {
-                        Text("$76")
+                        if let passenger = passenger {
+                            Text(passenger.firstName)
+                                .font(.system(size: 32, weight: .heavy))
+                        }
+                        Text("$\(totalPrice)")
                             .font(.system(size: 32, weight: .heavy))
                         
                         Text("for 1 passenger")
@@ -66,14 +84,28 @@ struct FlightBookingView: View {
                         }
                         
                         VStack(spacing: 10) {
-                            Toggle("Add baggage", isOn: $hasBaggage)
+                            Toggle(isOn: $hasBaggage) {
+                                HStack(spacing: 4) {
+                                    Text("Add baggage")
+                                    Text("+$\(booking.baggagePrice)")
+                                        .foregroundColor(.blue)
+                                        .fontWeight(.medium)
+                                }
+                            }
                             
                             VStack{
                                 Color.gray.frame(height: 1 / UIScreen.main.scale)
                                     .opacity(0.3)
                             }
                             
-                            Toggle("Refund/exchange", isOn: $hasRefund)
+                            Toggle(isOn: $hasRefund) {
+                                HStack(spacing: 4) {
+                                    Text("Refund/exchange")
+                                    Text("+$\(booking.refundPrice)")
+                                        .foregroundColor(.blue)
+                                        .fontWeight(.medium)
+                                }
+                            }
                         }
                         .padding()
                         .background(
@@ -94,6 +126,7 @@ struct FlightBookingView: View {
                         // Title of Box
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
+                                //let flight = "Istanbul — Los Angeles" // MARK: Add OriginCity
                                 Text("Istanbul — Los Angeles")
                                     .font(.system(size: 16, weight: .bold))
                                 Text("9h 5m")
@@ -251,26 +284,23 @@ struct FlightBookingView: View {
                     Button {
                         //
                     } label: {
-                        Text("Buy ticket for $76")
+                        Text("Buy ticket for $\(totalPrice)")
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }
                 .padding()
-                .padding(.bottom, 100)
+                //.padding(.bottom, 100)
                 .foregroundStyle(Constants.Colors.textPrimary)
             }
             .background(Constants.Colors.backgroundApp)
             .scrollIndicators(.hidden)
         }
-        .navigationTitle("Payment")
+        .navigationTitle("Booking")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPassengers) {
-            PassengersView()
+            AddPassengerView(passenger: $passenger)
+            //PassengersView
                 .interactiveDismissDisabled()
         }
     }
-}
-
-#Preview {
-    FlightBookingView()
 }
