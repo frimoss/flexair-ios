@@ -27,7 +27,7 @@ struct FlightInfoView: View {
                     Text(flight.airlineName)
                         .font(.system(size: titleSize, weight: .medium))
                     
-                    Text("13h 45m")
+                    Text(flight.duration)
                         .font(.system(size: 13, weight: .regular))
                         .foregroundStyle(.gray)
                 }
@@ -39,19 +39,19 @@ struct FlightInfoView: View {
             HStack(alignment: .top, spacing: 16) {
                 VStack(spacing: 12) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("13:50")
+                        Text(flight.formattedDepartureTime)
                             .font(.system(size: titleSize, weight: .medium))
                         
-                        Text("Tue, 18 Nov")
+                        Text(flight.formattedDepartureDate)
                             .font(.system(size: subtitleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("18:50")
+                        Text(flight.formattedArrivalTime)
                             .font(.system(size: titleSize, weight: .medium))
                         
-                        Text("Wed, 19 Nov")
+                        Text(flight.formattedArrivalDate)
                             .font(.system(size: subtitleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }
@@ -62,7 +62,7 @@ struct FlightInfoView: View {
                         Text(flight.departureCity)
                             .font(.system(size: titleSize, weight: .medium))
                         
-                        Text("\(flight.departureAirportName), \(flight.departureAirportCode)") // "Istanbul New Airport, IST"
+                        Text(flight.departureAirportTitle) // "Istanbul New Airport, IST"
                             .font(.system(size: subtitleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }
@@ -71,7 +71,7 @@ struct FlightInfoView: View {
                         Text(flight.arrivalCity)
                             .font(.system(size: titleSize, weight: .medium))
                         
-                        Text("\(flight.arrivalAirportName), \(flight.arrivalAirportCode)")
+                        Text(flight.arrivalAirportTitle)
                             .font(.system(size: subtitleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }

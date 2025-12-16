@@ -8,19 +8,30 @@
 import SwiftUI
 
 struct FlightBookingView: View {
-    
-    //@State private var bookingVM = FlightBookingViewModel()
+    @State private var viewModel = BookingViewModel()
     
     // MARK: - Public
-    let booking: Flight
+    var flight: Flight
+    @Binding var homeNavigationPath: NavigationPath
+    @Binding var bookingNavigationPath: NavigationPath
+    @Binding var tab: AppTab
     
     // MARK: - Private
-    //@State private var totalPrice: Int = 0
-    @State private var passengerName = ""
-    @State private var passenger: Passenger? = nil
+    @State private var selectedPassengers: [Passenger] = []
+    @Environment(\.dismiss) private var dismiss
+    
+    private var passengerPrice: Int {
+        return flight.flightPrice
+            + (hasBaggage ? flight.baggagePrice : 0)
+            + (hasRefund ? flight.refundPrice : 0)
+    }
     
     private var totalPrice: Int {
-        booking.price + (hasBaggage ? booking.baggagePrice : 0) + (hasRefund ? booking.refundPrice : 0)
+        let multiplier = selectedPassengers.count > 1
+            ? selectedPassengers.count
+            : 1
+        
+        return passengerPrice * multiplier
     }
 
     // Flags
@@ -28,24 +39,32 @@ struct FlightBookingView: View {
     @State private var hasRefund: Bool = false
     @State private var showPassengers: Bool = false
     
+    @State private var isBookingCreated: Bool = false
+    
+    // Constants
     private let titleSize: CGFloat = 15
     private let subtitleSize: CGFloat = 13
     
+    // Alert
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
-        NavigationStack {
+        VStack {
             ScrollView {
                 VStack(spacing: 24) {
                     
                     // MARK: - Price
                     VStack(spacing: 4) {
-                        if let passenger = passenger {
-                            Text(passenger.firstName)
-                                .font(.system(size: 32, weight: .heavy))
-                        }
                         Text("$\(totalPrice)")
                             .font(.system(size: 32, weight: .heavy))
                         
-                        Text("for 1 passenger")
+                        let subtitle = selectedPassengers.count > 1
+                            ? "for \(selectedPassengers.count) passengers"
+                            : "for 1 passenger"
+                        
+                        Text(subtitle)
                             .font(.system(size: titleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }
@@ -87,7 +106,7 @@ struct FlightBookingView: View {
                             Toggle(isOn: $hasBaggage) {
                                 HStack(spacing: 4) {
                                     Text("Add baggage")
-                                    Text("+$\(booking.baggagePrice)")
+                                    Text("+$\(flight.baggagePrice)")
                                         .foregroundColor(.blue)
                                         .fontWeight(.medium)
                                 }
@@ -101,7 +120,7 @@ struct FlightBookingView: View {
                             Toggle(isOn: $hasRefund) {
                                 HStack(spacing: 4) {
                                     Text("Refund/exchange")
-                                    Text("+$\(booking.refundPrice)")
+                                    Text("+$\(flight.refundPrice)")
                                         .foregroundColor(.blue)
                                         .fontWeight(.medium)
                                 }
@@ -126,10 +145,9 @@ struct FlightBookingView: View {
                         // Title of Box
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                //let flight = "Istanbul — Los Angeles" // MARK: Add OriginCity
-                                Text("Istanbul — Los Angeles")
+                                Text(flight.route)
                                     .font(.system(size: 16, weight: .bold))
-                                Text("9h 5m")
+                                Text(flight.duration)
                                     .font(.system(size: 13, weight: .regular))
                                     .foregroundStyle(.gray)
                             }
@@ -138,76 +156,7 @@ struct FlightBookingView: View {
                         .padding(.leading, 12)
                         
                         // Box Flight Info
-                        VStack(alignment: .leading, spacing: 12) {
-                            
-                            // Logo + Airline Title
-                            HStack(spacing: 12) {
-                                Image("TurkishAirlines")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("Turkish Airlines")
-                                        .font(.system(size: titleSize, weight: .medium))
-                                    
-                                    Text("13h 45m")
-                                        .font(.system(size: 13, weight: .regular))
-                                        .foregroundStyle(.gray)
-                                }
-                                
-                                Spacer()
-                            }
-                            
-                            // Arrival Time + Airports
-                            HStack(alignment: .top, spacing: 16) {
-                                VStack(spacing: 12) {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("13:50")
-                                            .font(.system(size: titleSize, weight: .medium))
-                                        
-                                        Text("Tue, 18 Nov")
-                                            .font(.system(size: subtitleSize, weight: .regular))
-                                            .foregroundStyle(.gray)
-                                    }
-                                    
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("18:50")
-                                            .font(.system(size: titleSize, weight: .medium))
-                                        
-                                        Text("Wed, 19 Nov")
-                                            .font(.system(size: subtitleSize, weight: .regular))
-                                            .foregroundStyle(.gray)
-                                    }
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 12) {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("Istanbul")
-                                            .font(.system(size: titleSize, weight: .medium))
-                                        
-                                        Text("Istanbul New Airport, IST")
-                                            .font(.system(size: subtitleSize, weight: .regular))
-                                            .foregroundStyle(.gray)
-                                    }
-                                    
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("Los Angeles")
-                                            .font(.system(size: titleSize, weight: .medium))
-                                        
-                                        Text("Sochi International Airport, AER")
-                                            .font(.system(size: subtitleSize, weight: .regular))
-                                            .foregroundStyle(.gray)
-                                    }
-                                }
-                                
-                                Spacer()
-                            }
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
-                                .fill(Constants.Colors.background)
-                        )
+                        FlightInfoView(flight: flight)
                     }
                     
                     // MARK: - Add Passengers
@@ -241,38 +190,50 @@ struct FlightBookingView: View {
                         
                         // Passengers
                         VStack(spacing: 10) {
-                            HStack(spacing: 14) {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(Constants.Colors.accent)
-                                Text("Nikolai Piatnov")
-                                    .font(.system(size: titleSize, weight: .medium))
-                                
-                                Spacer()
+                            if !selectedPassengers.isEmpty {
+                                ForEach(selectedPassengers) { passenger in
+                                    Button {
+                                        showPassengers = true
+                                    } label: {
+                                        HStack(spacing: 14) {
+                                            Image(systemName: "person.circle.fill")
+                                                .resizable()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundStyle(Constants.Colors.accent)
+                                            Text(passenger.fullName)
+                                                .font(.system(size: titleSize, weight: .medium))
+                                            
+                                            Spacer()
+                                        }
+                                        .padding()
+                                        .background(
+                                            RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
+                                                .fill(Constants.Colors.backgroundLight)
+                                        )
+                                    }
+                                }
+                            } else {
+                                Button {
+                                    showPassengers = true
+                                } label: {
+                                    HStack(spacing: 14) {
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .foregroundStyle(Constants.Colors.accent)
+                                        Text("Add Passenger")
+                                            .font(.system(size: titleSize, weight: .medium))
+                                        
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(
+                                        RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
+                                            .fill(Constants.Colors.backgroundLight)
+                                    )
+                                }
                             }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
-                                    .fill(Constants.Colors.backgroundLight)
-                            )
-                            
-                            HStack(spacing: 14) {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(Constants.Colors.accent)
-                                Text("Ariana Pyatnova")
-                                    .font(.system(size: titleSize, weight: .medium))
-                                    //.foregroundStyle(Constants.Colors.accent)
-                                
-                                Spacer()
-                            }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: Constants.UI.cornerRadius)
-                                    .fill(Constants.Colors.backgroundLight)
-                            )
+
                         }
                         .padding()
                         .background(
@@ -282,25 +243,62 @@ struct FlightBookingView: View {
                     }
                     
                     Button {
-                        //
+                        if selectedPassengers.isEmpty {
+                            alertMessage = "Add at least one Passenger"
+                            showAlert = true
+                            Haptics.error()
+                            return
+                        }
+                        
+                        Task {
+                            for passenger in selectedPassengers {
+                                do {
+                                    try await viewModel.createBooking(
+                                        flightId: flight.flightId,
+                                        passengerId: passenger.passengerId,
+                                        totalPrice: passengerPrice
+                                    )
+                                } catch {
+                                    Haptics.error()
+                                    print("❌ Booking failed for \(passenger.fullName): \(error)")
+                                }
+                            }
+                            isBookingCreated = true
+                            alertMessage = "Booking was successfully completed"
+                            Haptics.success()
+                            showAlert = true
+                        }
                     } label: {
                         Text("Buy ticket for $\(totalPrice)")
                     }
                     .buttonStyle(PrimaryButtonStyle())
                 }
                 .padding()
-                //.padding(.bottom, 100)
                 .foregroundStyle(Constants.Colors.textPrimary)
             }
             .background(Constants.Colors.backgroundApp)
             .scrollIndicators(.hidden)
         }
-        .navigationTitle("Booking")
-        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPassengers) {
-            AddPassengerView(passenger: $passenger)
-            //PassengersView
+            PassengersView(selectedPassengers: $selectedPassengers)
                 .interactiveDismissDisabled()
         }
+        .alert(isBookingCreated ? alertMessage : "Error", isPresented: $showAlert) {
+            Button(isBookingCreated ? "Go to booking" : "OK", role: .cancel) {
+                
+                if isBookingCreated, let booking = viewModel.completedBooking {
+                    // MARK: Navigation in the Start + Change Tab to Bookings
+                    homeNavigationPath = NavigationPath() // = []
+                    bookingNavigationPath = NavigationPath() // = []
+                    bookingNavigationPath.append(booking)
+                    tab = .bookings
+                }
+                
+            }
+        } message: {
+            Text(!isBookingCreated ? alertMessage : "")
+        }
+        .navigationTitle("Booking")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
