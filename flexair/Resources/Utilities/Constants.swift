@@ -20,7 +20,7 @@ enum Constants {
     
     enum Colors {
         /// Main Yellow
-        static let accentApple = Color("AccentColor")
+        static let accentApple = Color("MyAccentBlue")
         static let accent = Color("MyAccentColor")
         static let textAccent = Color("TextAccent")
         
