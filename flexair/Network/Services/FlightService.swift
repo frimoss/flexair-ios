@@ -31,7 +31,7 @@ final class FlightService {
     ) async throws -> [Flight] {
         
         // Convert Date to String format for Database
-        let departureDateString = "2025-12-15"//departureDate.toDateString() // MARK: Date for Test
+        let departureDateString = departureDate.toAPIFormat()
         
         let flights: [Flight] = try await supabase
             .rpc(
