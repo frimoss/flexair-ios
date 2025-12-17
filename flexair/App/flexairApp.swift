@@ -9,9 +9,31 @@ import SwiftUI
 
 @main
 struct flexairApp: App {
+    
+    @State private var appState = AppState()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                switch appState.state {
+                case .loading:
+                    LoadView()
+                        .transition(.opacity)
+                
+                case .authenticated:
+                    MainTabView()
+                        .transition(.opacity)
+                
+                case .unauthenticated:
+                    LoginView()
+                        .transition(.opacity)
+                }
+            }
+            .animation(.easeInOut(duration: 0.3), value: appState.state)
+            .preferredColorScheme(.dark)
+            .task {
+                await appState.initialize()
+            }
         }
     }
 }
