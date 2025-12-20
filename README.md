@@ -111,5 +111,4 @@ null for now :)
 
 ![screenshots](app-shots/Slide-2.png)
 
-**Academic Project** - CMPE344 Database Management Systems  
-Cyprus International University - Fall 2025
+**Academic Project** - CMPE344 Database Management Systems, Cyprus International University (Fall 2025)
