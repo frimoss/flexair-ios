@@ -1,6 +1,6 @@
 # ✈️ FlexAir - Flight Booking System
 
-Flight Booking & Management System powered by Supabase (Backend as a Service) and PostgreSQL, including an iOS Mobile Application for customers and a Web-based Dashboard for admins.
+Flight Booking & Management System powered by Supabase (Backend as a Service) and PostgreSQL, including an iOS Mobile Application for Customers and a Web-based Dashboard for Admins.
 
 ![screenshots](app-shots/Slide-1.png)
 
@@ -40,12 +40,12 @@ Flight Booking & Management System powered by Supabase (Backend as a Service) an
 
 ## 🛠️ Technology Stack
 
-- Database: PostgreSQL (Supabase), SQL and PL/pgSQL
-- Backend as a Service (BaaS): Supabase (Auth, Realtime, PostgREST, Functions, Storage)
-- Authentication: Supabase Auth.users
-- Mobile Application: iOS App (Swift, SwiftUI, MVVM)
-- Admin Interface: Web-based Dashboard (Python, Flask)
-- Version Control: Git
+- **Database:** PostgreSQL (Supabase), SQL and PL/pgSQL
+- **Backend as a Service (BaaS):** Supabase (Auth, Realtime, PostgREST, Functions, Storage)
+- **Authentication:** Supabase Auth.users
+- **Mobile Application:** iOS App (Swift, SwiftUI, MVVM)
+- **Admin Interface:** Web-based Dashboard (Python, Flask)
+- **Version Control:** Git
 
 
 ## 🚀 Database Features
@@ -109,7 +109,7 @@ null (i will add later 💕)
 ## 📄 Documentation
 null for now :)
 
+![screenshots](app-shots/Slide-2.png)
+
 **Academic Project** - CMPE344 Database Management Systems  
 Cyprus International University - Fall 2025
-
-![screenshots](app-shots/Slide-2.png)
