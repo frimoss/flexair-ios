@@ -291,7 +291,7 @@ struct FlightBookingView: View {
                     homeNavigationPath = NavigationPath() // = []
                     bookingNavigationPath = NavigationPath() // = []
                     bookingNavigationPath.append(booking)
-                    tab = .bookings
+                    tab = .userBookings
                 }
                 
             }
