@@ -2,7 +2,7 @@
 
 A flight booking and management system with database backend and mobile interface(IOS GUI).
 
-![screenshots](app-shots/IMG_7903.JPEG)
+![screenshots](app-shots/Slide-1.png)
 
 ## 📋 Project Information
 
@@ -111,3 +111,5 @@ null for now :)
 
 **Academic Project** - CMPE344 Database Management Systems  
 Cyprus International University - Fall 2025
+
+![screenshots](app-shots/Slide-2.png)
