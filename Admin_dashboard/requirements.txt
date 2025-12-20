@@ -1,0 +1,4 @@
+flask
+gunicorn
+supabase
+python-dotenv

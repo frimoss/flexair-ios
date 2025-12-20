@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Bookings</h1>
+
+<form method="get" class="filters">
+  <label>
+    Status:
+    <select name="status" onchange="this.form.submit()">
+      <option value="">All</option>
+      <option value="pending"   {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+      <option value="confirmed" {% if status_filter == 'confirmed' %}selected{% endif %}>Confirmed</option>
+      <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Cancelled</option>
+    </select>
+  </label>
+</form>
+
+<div class="table-wrapper">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Ref</th>
+        <th>Booking ID</th>
+        <th>User ID</th>
+        <th>Flight ID</th>
+        <th>Passenger ID</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for b in bookings %}
+      <tr>
+        <td>{{ b.booking_reference }}</td>
+        <td>{{ b.booking_id }}</td>
+        <td>{{ b.user_id }}</td>
+        <td>{{ b.flight_id }}</td>
+        <td>{{ b.passenger_id }}</td>
+        <td>{{ b.status }}</td>
+        <td>{{ b.total_price }}</td>
+        <td>{{ b.booking_date }}</td>
+        <td>
+          <a href="{{ url_for('booking_detail', booking_id=b.booking_id) }}" class="view-btn">
+            View
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

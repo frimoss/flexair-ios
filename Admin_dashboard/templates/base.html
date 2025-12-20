@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Admin{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="{{ url_for('dashboard') }}" class="brand">
+      Flight Admin
+    </a>
+  </div>
+
+  <div class="nav-right">
+    <a href="{{ url_for('dashboard') }}"
+       class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+       Dashboard
+    </a>
+
+    <a href="{{ url_for('bookings_list') }}"
+       class="{% if request.endpoint == 'bookings_list' %}active{% endif %}">
+       Bookings
+    </a>
+
+    <a href="{{ url_for('flights_list') }}"
+       class="{% if request.endpoint == 'flights_list' %}active{% endif %}">
+       Flights
+    </a>
+
+    <a href="{{ url_for('passengers_list') }}"
+       class="{% if request.endpoint == 'passengers_list' %}active{% endif %}">
+       Passengers
+    </a>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</nav>
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
