@@ -93,15 +93,10 @@ Flight Booking & Management System powered by Supabase (Backend as a Service) an
 ### iOS Application Setup
 
 1. Get `your Supabase URL`: Open Supabase project/Project Settings/Data API - Project URL
-
 2. Get `your Supabase Key`: Open Supabase project/Project Settings/API Keys - Publishable key
-
 3. Open `flexair` project in XCode 16 or later
-
 4. Open *SupabaseManager.swift* `flexair/Network/SupabaseManager/SupabaseManager.swift`
-
 5. Insert `your Supabase URL` instead of "YOUR_SUPABASE_URL"
-
 6. Insert `your Supabase Key` instead of "YOUR_SUPABASE_KEY"
 
 ```swift
@@ -123,9 +118,7 @@ self.supabase = SupabaseClient(
 - ✅ Mobile application interface
 - ✅ Cloud deployment (Supabase)
 - ✅ GitHub repository
-
-## 📄 Documentation
-null for now :)
+  
 
 ![screenshots](app-shots/Slide-2.png)
 
