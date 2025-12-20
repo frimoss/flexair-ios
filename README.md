@@ -40,9 +40,13 @@ A flight booking and management system with database backend and mobile interfac
 
 ## 🛠️ Technology Stack
 
-- Database: PostgreSQL
-- Client: Native iOS Mobile Application (Swift, SwiftUI, MVVM)
-- Backend as a Service: Supabase (Auth, Realtime, PostgREST, Functions, Storage)
+- Database: PostgreSQL (Supabase), SQL and PL/pgSQL
+- Backend as a Service (BaaS): Supabase (Auth, Realtime, PostgREST, Functions, Storage)
+- Authentication: Supabase Auth.users
+- Mobile Application: iOS App (Swift, SwiftUI, MVVM)
+- Admin Interface: Web-based Dashboard (Python, Flask)
+- Version Control: Git
+
 
 ## 🚀 Database Features
 
