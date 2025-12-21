@@ -14,9 +14,13 @@ final class SupabaseManager {
     let supabase: SupabaseClient
     
     private init() {
+        guard let url = URL(string: Config.supabaseURL) else {
+            fatalError("Invalid Supabase URL")
+        }
+        
         self.supabase = SupabaseClient(
-            supabaseURL: URL(string: "YOUR_SUPABASE_URL")!,
-            supabaseKey: "YOUR_SUPABASE_KEY"
+            supabaseURL: url,
+            supabaseKey: Config.supabaseKey
         )
     }
 }

@@ -15,7 +15,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CE19A0772EF6AAD500CAA3CF /* Exceptions for "flexair" folder in "flexair" target */ = {
+		CE85C8D22EF82A7C0019C065 /* Exceptions for "flexair" folder in "flexair" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -28,7 +28,7 @@
 		CE273B4C2EA7F509006BD541 /* flexair */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				CE19A0772EF6AAD500CAA3CF /* Exceptions for "flexair" folder in "flexair" target */,
+				CE85C8D22EF82A7C0019C065 /* Exceptions for "flexair" folder in "flexair" target */,
 			);
 			path = flexair;
 			sourceTree = "<group>";
@@ -149,6 +149,8 @@
 /* Begin XCBuildConfiguration section */
 		CE273B532EA7F50A006BD541 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = CE273B4C2EA7F509006BD541 /* flexair */;
+			baseConfigurationReferenceRelativePath = Config/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -212,6 +214,8 @@
 		};
 		CE273B542EA7F50A006BD541 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = CE273B4C2EA7F509006BD541 /* flexair */;
+			baseConfigurationReferenceRelativePath = Config/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -268,6 +272,8 @@
 		};
 		CE273B562EA7F50A006BD541 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = CE273B4C2EA7F509006BD541 /* flexair */;
+			baseConfigurationReferenceRelativePath = Config/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -276,11 +282,13 @@
 				DEVELOPMENT_TEAM = RBQ2F64K49;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = flexair/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flexair;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,6 +304,8 @@
 		};
 		CE273B572EA7F50A006BD541 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = CE273B4C2EA7F509006BD541 /* flexair */;
+			baseConfigurationReferenceRelativePath = Config/Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -304,6 +314,7 @@
 				DEVELOPMENT_TEAM = RBQ2F64K49;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = flexair/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flexair;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
