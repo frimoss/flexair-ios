@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 #  SESSION VERSIONING
-SESSION_VERSION = 1
+SESSION_VERSION = 2
 
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -235,18 +235,41 @@ def booking_detail(booking_id):
 
 # flights 
 
+# @app.route("/flights")
+# @login_required
+# def flights_list():
+#     flights = (
+#         supabase.table("flights")
+#         .select("*")
+#         .order("arrival_time", desc=True)
+#         .execute()
+#         .data or []
+#     )
+#     return render_template("flights.html", flights=flights)
 @app.route("/flights")
 @login_required
 def flights_list():
-    flights = (
+    query_text = request.args.get("q", "").strip()
+
+    query = (
         supabase.table("flights")
         .select("*")
-        .order("arrival_time", desc=True)
-        .limit(200)
-        .execute()
-        .data or []
+        # .order("created_at", desc=True)
     )
-    return render_template("flights.html", flights=flights)
+
+    if query_text:
+        query = query.or_(
+            f"flight_number.ilike.%{query_text}%,"
+            f"status.ilike.%{query_text}%"
+        )
+
+    flights = query.execute().data or []
+
+    return render_template(
+        "flights.html",
+        flights=flights,
+        query_text=query_text
+    )
 
 
 @app.route("/flights/<flight_id>")
@@ -304,6 +327,92 @@ def flight_detail(flight_id):
         departure_airport=departure_airport,
         bookings=bookings,
     )
+
+# add flight
+@app.route("/flights/add", methods=["GET", "POST"])
+@login_required
+def add_flight():
+    error = None
+
+    if request.method == "POST":
+        flight_no = request.form.get("flight_no", "").strip()
+        airline = request.form.get("airline", "").strip()
+        departure = request.form.get("departure", "").strip()
+        arrival_airport_id = request.form.get("arrival_airport_id", "").strip()
+        departure_time = request.form.get("departure_time")
+        arrival_time = request.form.get("arrival_time")
+        price = request.form.get("price")
+        seats = request.form.get("seats")
+        status = request.form.get("status", "active")
+
+        # validation
+        if not all([
+            flight_no,
+            airline,
+            departure,
+            arrival_airport_id,
+            departure_time,
+            arrival_time,
+            price,
+            seats
+        ]):
+            error = "All fields are required"
+        else:
+            try:
+                supabase.table("flights").insert({
+                    "flight_number": flight_no,
+                    "airline_id": airline,
+                    "departure_airport_id": departure,
+                    "arrival_airport_id": arrival_airport_id,
+                    "departure_time": departure_time,  
+                    "arrival_time": arrival_time,
+                    "price": price,
+                    "available_seats": seats,
+                    "status": status,
+                }).execute()
+
+                return redirect(url_for("flights_list"))
+
+            except Exception as e:
+                print(e)
+                error = str(e)
+
+    return render_template("flight_add.html", error=error)
+
+@app.route("/flights/<flight_id>/delete", methods=["POST"])
+@login_required
+def delete_flight(flight_id):
+    # 1. Check if flight exists
+    flight_resp = (
+        supabase.table("flights")
+        .select("flight_id")
+        .eq("flight_id", flight_id)
+        .limit(1)
+        .execute()
+    )
+
+    if not flight_resp.data:
+        return redirect(url_for("flights_list"))
+
+    # 2. Check if flight has bookings
+    bookings_resp = (
+        supabase.table("bookings")
+        .select("booking_id", count="exact")
+        .eq("flight_id", flight_id)
+        .execute()
+    )
+
+    if bookings_resp.count and bookings_resp.count > 0:
+        # Flight has bookings → do NOT delete
+        return redirect(url_for("flights_list"))
+
+    # 3. Safe to delete
+    supabase.table("flights").delete().eq("flight_id", flight_id).execute()
+
+    return redirect(url_for("flights_list"))
+
+
+
 
 
 #  passengers
