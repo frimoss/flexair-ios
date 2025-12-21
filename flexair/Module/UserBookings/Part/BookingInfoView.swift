@@ -26,7 +26,12 @@ struct BookingInfoView: View {
                 
                 Text(userBooking.airlineName)
                     .font(.system(size: subtitleSize, weight: .semibold))
-
+                    .padding(.trailing, 8)
+                
+                Image(userBooking.airlineCode)
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .clipShape(Circle())
             }
             .padding(.leading, 2)
             .padding(.bottom, 8)

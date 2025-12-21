@@ -16,6 +16,7 @@ struct UserBooking: Codable, Identifiable, Hashable {
     let flightId: Int
     let flightNumber: String
     let airlineName: String
+    let airlineCode: String
     let departureAirportCode: String
     let departureAirportName: String
     let departureCity: String
@@ -53,6 +54,7 @@ struct UserBooking: Codable, Identifiable, Hashable {
         case flightId = "flight_id"
         case flightNumber = "flight_number"
         case airlineName = "airline_name"
+        case airlineCode = "airline_code"
         case departureAirportCode = "departure_airport_code"
         case departureAirportName = "departure_airport_name"
         case departureCity = "departure_city"

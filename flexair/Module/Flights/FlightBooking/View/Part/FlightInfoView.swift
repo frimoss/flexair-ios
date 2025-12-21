@@ -19,9 +19,10 @@ struct FlightInfoView: View {
             
             // Logo + Airline Title
             HStack(spacing: 12) {
-                Image("TurkishAirlines")
+                Image(flight.airlineCode)
                     .resizable()
                     .frame(width: 30, height: 30)
+                    .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(flight.airlineName)

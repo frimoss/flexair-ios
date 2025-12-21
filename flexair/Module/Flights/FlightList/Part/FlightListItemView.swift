@@ -49,9 +49,10 @@ struct FlightListItemView: View {
             }
             
             HStack(alignment: .center, spacing: 12) {
-                Image("TurkishAirlines")
+                Image(flight.airlineCode)
                     .resizable()
                     .frame(width: 25, height: 25)
+                    .clipShape(Circle())
                 
                 HStack(alignment: .top, spacing: 1) {
                     VStack(alignment: .leading) {
