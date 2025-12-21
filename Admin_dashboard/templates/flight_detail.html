@@ -4,7 +4,7 @@
 
 <h1 class="page-title">Flight {{ flight.flight_number }}</h1>
 
-<!-- ================= FLIGHT INFO ================= -->
+
 <section class="detail-grid">
   <div class="card">
     <h2>Flight Info</h2>
@@ -13,6 +13,7 @@
       <li><strong>Airline ID:</strong> {{ flight.airline_id }}</li>
       <li><strong>Departure Airport ID:</strong> {{ flight.departure_airport_id }}</li>
       <li><strong>Arrival Time:</strong> {{ flight.arrival_time }}</li>
+      <li><strong>Arrival Airport ID:</strong> {{ flight.arrival_airport_id }}</li>
       <li><strong>Price:</strong> {{ flight.price }}</li>
       <li><strong>Available Seats:</strong> {{ flight.available_seats }}</li>
       <li><strong>Status:</strong> {{ flight.status }}</li>
@@ -20,7 +21,7 @@
   </div>
 </section>
 
-<!-- ================= BOOKINGS ================= -->
+
 <h2 style="margin-top: 2rem;">Bookings for this Flight</h2>
 
 {% if bookings %}
