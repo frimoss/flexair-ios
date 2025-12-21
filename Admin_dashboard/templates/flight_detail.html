@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Flight {{ flight.flight_number }}{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Flight {{ flight.flight_number }}</h1>
+
+<!-- ================= FLIGHT INFO ================= -->
+<section class="detail-grid">
+  <div class="card">
+    <h2>Flight Info</h2>
+    <ul>
+      <li><strong>ID:</strong> {{ flight.flight_id }}</li>
+      <li><strong>Airline ID:</strong> {{ flight.airline_id }}</li>
+      <li><strong>Departure Airport ID:</strong> {{ flight.departure_airport_id }}</li>
+      <li><strong>Arrival Time:</strong> {{ flight.arrival_time }}</li>
+      <li><strong>Price:</strong> {{ flight.price }}</li>
+      <li><strong>Available Seats:</strong> {{ flight.available_seats }}</li>
+      <li><strong>Status:</strong> {{ flight.status }}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= BOOKINGS ================= -->
+<h2 style="margin-top: 2rem;">Bookings for this Flight</h2>
+
+{% if bookings %}
+  <div class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Ref</th>
+          <th>Booking ID</th>
+          <th>User ID</th>
+          <th>Passenger ID</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for b in bookings %}
+        <tr>
+          <td>{{ b.booking_reference }}</td>
+          <td>{{ b.booking_id }}</td>
+          <td>{{ b.user_id }}</td>
+          <td>{{ b.passenger_id }}</td>
+          <td>{{ b.status }}</td>
+          <td>{{ b.total_price }}</td>
+          <td>{{ b.booking_date }}</td>
+          <td>
+            <a
+              href="{{ url_for('booking_detail', booking_id=b.booking_id) }}"
+              class="view-btn"
+            >
+              View
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <p>No bookings for this flight.</p>
+{% endif %}
+
+{% endblock %}

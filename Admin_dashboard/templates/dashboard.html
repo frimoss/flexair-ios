@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Dashboard</h1>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <h2>Bookings</h2>
+    <p class="stat-number">{{ total_bookings }}</p>
+  </div>
+  <div class="stat-card">
+    <h2>Flights</h2>
+    <p class="stat-number">{{ total_flights }}</p>
+  </div>
+  <div class="stat-card">
+    <h2>Passengers</h2>
+    <p class="stat-number">{{ total_passengers }}</p>
+  </div>
+  <div class="stat-card">
+    <h2>Users</h2>
+    <p class="stat-number">{{ total_users }}</p>
+  </div>
+</div>
+
+<h2 class="page-title">Recent Bookings</h2>
+
+<div class="table-wrapper">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Ref</th>
+        <th>Booking ID</th>
+        <th>User</th>
+        <th>Flight</th>
+        <th>Passenger</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for b in recent_bookings %}
+      <tr>
+        <td>{{ b.booking_reference }}</td>
+        <td>{{ b.booking_id }}</td>
+        <td>{{ b.user_id }}</td>
+        <td>{{ b.flight_id }}</td>
+        <td>{{ b.passenger_id }}</td>
+        <td>{{ b.status }}</td>
+        <td>{{ b.total_price }}</td>
+        <td>{{ b.booking_date }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if show != "all" %}
+  <div style="margin-top:1rem; text-align:right;">
+    <a href="{{ url_for('dashboard', show='all') }}" class="view-btn">
+      Show more
+    </a>
+  </div>
+{% else %}
+  <div style="margin-top:1rem; text-align:right;">
+    <a href="{{ url_for('dashboard') }}" class="view-btn">
+      Show less
+    </a>
+  </div>
+{% endif %}
+
+{% endblock %}

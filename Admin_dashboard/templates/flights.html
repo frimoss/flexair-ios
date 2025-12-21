@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Flights{% endblock %}
+{% block content %}
+
+<h1 class="page-title">Flights</h1>
+
+<div class="top-bar">
+    <input 
+        type="text" 
+        id="flightSearch" 
+        placeholder="Search flights..." 
+        class="search-input"
+    >
+</div>
+
+<div class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Flight No.</th>
+          <th>Airline</th>
+          <th>Departure</th>
+          <th>Arrival Time</th>
+          <th>Price</th>
+          <th>Seats</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="flightTableBody">
+      {% for f in flights %}
+        <tr>
+          <td>{{ f.flight_id }}</td>
+          <td>{{ f.flight_number }}</td>
+          <td>{{ f.airline_id }}</td>
+          <td>{{ f.departure_airport_id }}</td>
+          <td>{{ f.arrival_time }}</td>
+          <td>{{ f.price }}</td>
+          <td>{{ f.available_seats }}</td>
+          <td>{{ f.status }}</td>
+          <td>
+            <a class="view-btn" href="{{ url_for('flight_detail', flight_id=f.flight_id) }}">View</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("flightSearch");
+    let rows = document.querySelectorAll(".styled-table tbody tr");
+
+    input.addEventListener("keyup", function () {
+        let filter = input.value.toLowerCase();
+
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
+    });
+});
+</script>
+
+{% endblock %}

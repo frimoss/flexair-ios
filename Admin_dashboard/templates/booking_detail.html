@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Booking {{ booking.booking_reference }}{% endblock %}
+{% block content %}
+<h1>Booking {{ booking.booking_reference }}</h1>
+
+<section class="detail-grid">
+  <div class="card">
+    <h2>Booking</h2>
+    <ul>
+      <li>ID: {{ booking.booking_id }}</li>
+      <li>Status: {{ booking.status }}</li>
+      <li>Total price: {{ booking.total_price }}</li>
+      <li>Date: {{ booking.booking_date }}</li>
+      <li>User ID: {{ booking.user_id }}</li>
+      <li>Flight ID: {{ booking.flight_id }}</li>
+      <li>Passenger ID: {{ booking.passenger_id }}</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Passenger</h2>
+    {% if passenger %}
+      <ul>
+        <li>Name: {{ passenger.first_name }} {{ passenger.last_name }}</li>
+        <li>DOB: {{ passenger.date_of_birth }}</li>
+        <li>Gender: {{ passenger.gender }}</li>
+        <li>Passport: {{ passenger.passport_number }}</li>
+        <li>Nationality: {{ passenger.nationality }}</li>
+      </ul>
+    {% else %}
+      <p>No passenger data.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Flight</h2>
+    {% if flight %}
+      <ul>
+        <li>Flight number: {{ flight.flight_number }}</li>
+        <li>Airline ID: {{ flight.airline_id }}</li>
+        <li>Departure airport ID: {{ flight.departure_airport_id }}</li>
+        <li>Arrival time: {{ flight.arrival_time }}</li>
+        <li>Price: {{ flight.price }}</li>
+        <li>Available seats: {{ flight.available_seats }}</li>
+        <li>Status: {{ flight.status }}</li>
+      </ul>
+    {% else %}
+      <p>No flight data.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>User profile</h2>
+    {% if profile %}
+      <ul>
+        <li>User ID: {{ profile.user_id }}</li>
+        <li>Role: {{ profile.role }}</li>
+        <li>Created: {{ profile.created_at }}</li>
+        <li>Updated: {{ profile.updated_at }}</li>
+      </ul>
+    {% else %}
+      <p>No profile data.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
