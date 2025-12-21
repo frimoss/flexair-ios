@@ -37,6 +37,11 @@ struct FlightSearchView: View {
         VStack {
             VStack {
                 VStack(spacing: 24) {
+                    // MARK: Logo
+                    LogoView()
+                        .padding(.top, 24)
+                    
+                    // MARK: Input
                     VStack(spacing: 12) {
                         ZStack(alignment: .trailing) {
                             VStack(spacing: 12) {
@@ -75,6 +80,7 @@ struct FlightSearchView: View {
                         
                     }
                     
+                    // MARK: Button "Get tickets"
                     Button("Get tickets") {
                         guard let departure = departureAirport else {
                             alertMessage = "Departure airport is not selected"
@@ -130,8 +136,6 @@ struct FlightSearchView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Flexair")
-            .navigationBarTitleDisplayMode(.large)
             .background(Constants.Colors.backgroundApp)
             .sheet(isPresented: $showAirportListOrigin) {
                 AirportListView(airports: viewModel.airports, selected: $departureAirport, title: "From")
