@@ -31,6 +31,7 @@ struct flexairApp: App {
             }
             .animation(.easeInOut(duration: 0.3), value: appState.state)
             .preferredColorScheme(.dark)
+            .environment(appState)
             .task {
                 await appState.initialize()
             }

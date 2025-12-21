@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(AppState.self) private var appState
     @State private var authService = AuthService.shared
-    @State private var appState = AppState()
     
     // MARK: - Alert
     @State private var showAlert = false
@@ -116,6 +116,8 @@ struct ProfileView: View {
                     Button("Sign out", role: .destructive) {
                         Task {
                             await authService.signOut()
+                            // Update Auth State
+                            appState.updateState()
                         }
                     }
                 } message: {

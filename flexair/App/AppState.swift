@@ -32,6 +32,10 @@ final class AppState {
         }
         
         // Update state
+        updateState()
+    }
+    
+    func updateState() {
         state = authService.isAuthenticated ? .authenticated : .unauthenticated
     }
 }

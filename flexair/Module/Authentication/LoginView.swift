@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
-    private var authService = AuthService.shared
+    @Environment(AppState.self) private var appState
+    @State private var authService = AuthService.shared
     
     @State private var email = ""
     @State private var password = ""
@@ -109,6 +110,8 @@ struct LoginView: View {
         } else {
             try await authService.signIn(email: email, password: password)
         }
+        // Update Auth State
+        appState.updateState()
     }
 }
 
