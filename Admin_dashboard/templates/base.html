@@ -15,7 +15,10 @@
     </a>
   </div>
 
-  <div class="nav-right">
+  <!-- Hamburger (mobile only) -->
+  <button class="menu-toggle" onclick="toggleNav()">☰</button>
+
+  <div class="nav-right" id="navMenu">
     <a href="{{ url_for('dashboard') }}"
        class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
        Dashboard
@@ -43,6 +46,12 @@
 <main class="container">
   {% block content %}{% endblock %}
 </main>
+
+<script>
+function toggleNav() {
+  document.getElementById("navMenu").classList.toggle("open");
+}
+</script>
 
 </body>
 </html>
