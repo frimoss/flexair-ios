@@ -40,11 +40,11 @@ Flight Booking & Management System powered by Supabase (Backend as a Service) an
 
 ## 🛠️ Technology Stack
 
-- **Database:** PostgreSQL (Supabase), SQL and PL/pgSQL
+- **Database:** PostgreSQL, SQL and PL/pgSQL
 - **Backend as a Service (BaaS):** Supabase (Auth, Realtime, PostgREST, Functions, Storage)
-- **Authentication:** Supabase Auth.users
+- **Authentication:** Supabase Auth
 - **Mobile Application:** iOS App (Swift, SwiftUI, MVVM)
-- **Admin Interface:** Web-based Dashboard (Python, Flask)
+- **Admin Interface:** Web-based Dashboard (Python, Flask, Render Cloud)
 - **Version Control:** Git
 
 
