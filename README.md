@@ -6,7 +6,6 @@
 
 
 ## 🎥 FlexAir Demo Video
-https://github.com/frimoss/flexair-ios/raw/main/app-shots/demo.mp4
 
 ## 📋 Project Information
 
