@@ -1,6 +1,6 @@
-# ✈️ FlexAir - Flight Booking System
+# ✈️ Flexair - Flight Booking System
 
-Flight Booking & Management System powered by Supabase (Backend as a Service) and PostgreSQL, including an iOS Mobile Application for Customers and a Web-based Dashboard for Admins.
+**Flight Booking & Management System** powered by Supabase (Backend as a Service) and PostgreSQL, including an iOS Mobile Application for Customers and a Web-based Dashboard for Admins.
 
 ![screenshots](app-shots/Slide-1.png)
 
