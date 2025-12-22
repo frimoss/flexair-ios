@@ -4,8 +4,10 @@
 
 ![screenshots](app-shots/Slide-1.png)
 
-## FlexAir Demo Video
-https://github.com/frimoss/flexair-ios/blob/main/app-shots/WhatsApp%20Video%202025-12-22%20at%203.02.10%20PM.mp4
+
+## 🎥 FlexAir Demo Video
+https://github.com/frimoss/flexair-ios/raw/main/app-shots/demo.mp4
+
 ## 📋 Project Information
 
 - **Course**: CMPE344 - Database Management Systems and Programming II
