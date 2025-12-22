@@ -106,16 +106,18 @@ Flight Booking & Management System powered by Supabase (Backend as a Service) an
 
 ## 📝 Project Requirements Met
 
-- ✅ 6+ tables with proper relationships
-- ✅ User authentication and role-based access
-- ✅ Foreign keys and constraints
-- ✅ 7 PL/SQL functions
-- ✅ 3 Database triggers
-- ✅ 3 Database views
+- ✅ 6+ tables with proper Relationships
+- ✅ User Authentication and Role-based Access
+- ✅ Foreign keys and Constraints
+- ✅ 7 PL/SQL Functions
+- ✅ 3 Database Triggers
+- ✅ 3 Database Views
 - ✅ 7 Management queries (JOIN, subquery, GROUP BY, etc.)
-- ✅ Mobile application interface
-- ✅ Cloud deployment (Supabase)
-- ✅ GitHub repository
+- ✅ Mobile Application for Customers
+- ✅ Web-based Dashboard for Admins
+- ✅ Backend as a Service (Supabase)
+- ✅ Cloud deployment (Render)
+- ✅ GitHub Repository
   
 
 ![screenshots](app-shots/Slide-2.png)
