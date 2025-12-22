@@ -4,6 +4,9 @@
 
 ![screenshots](app-shots/Slide-1.png)
 
+## FlexAir Demo Video
+https://github.com/frimoss/flexair-ios
+
 ## 📋 Project Information
 
 - **Course**: CMPE344 - Database Management Systems and Programming II
