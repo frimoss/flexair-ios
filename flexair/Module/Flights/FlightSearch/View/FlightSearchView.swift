@@ -14,7 +14,6 @@ struct FlightSearchView: View {
     
     // MARK: - Private
     @State private var viewModel = FlightSearchViewModel()
-    @State private var navigateToFlights = false
     
     // MARK: - Airports
     @State private var departureAirport: Airport? = airportData[0] // Default: "Istanbul, IST"
@@ -28,6 +27,23 @@ struct FlightSearchView: View {
     @State private var selectedDateText = "Travel dates"
     @State private var isDateSelected = false
     @State private var showDatePicker = false
+    
+    // MARK: - Passengers Count
+    @State private var adultsCount = 1
+    @State private var childrenCount = 0
+    @State private var showPassengerPicker = false
+    
+    private var totalPassengersCount: Int {
+        adultsCount + childrenCount
+    }
+    
+    private var passengersTitle: String {
+        if totalPassengersCount > 1 {
+            return "\(totalPassengersCount) passengers"
+        } else {
+            return "\(totalPassengersCount) passenger"
+        }
+    }
     
     // MARK: - Alert
     @State private var showAlert = false
@@ -73,64 +89,26 @@ struct FlightSearchView: View {
                                 showDatePicker = true
                             }
                             // Passenger
-                            SearchFlightButtonView(title: "1 passenger", image: "Passenger", isPrimaryColor: false) {
-                                // TODO: MVP 1 passenger
+                            SearchFlightButtonView(title: passengersTitle, image: "Passenger", isPrimaryColor: true) {
+                                showPassengerPicker = true
                             }
                         }
                         
                     }
                     
                     // MARK: Button "Get tickets"
-                    Button("Get tickets") {
-                        guard let departure = departureAirport else {
-                            alertMessage = "Departure airport is not selected"
-                            showAlert = true
-                            Haptics.error()
-                            return
-                        }
-                        guard let arrival = arrivalAirport else {
-                            alertMessage = "Arrival airport is not selected"
-                            showAlert = true
-                            Haptics.error()
-                            return
-                        }
-                        if departure.city == arrival.city {
-                            alertMessage = "The departure and arrival airports cannot be the same"
-                            showAlert = true
-                            Haptics.error()
-                            return
-                        }
-                        if !isDateSelected {
-                            alertMessage = "Flight date is not selected"
-                            showAlert = true
-                            Haptics.error()
-                            return
-                        }
-                        
-                        Task {
-                            await viewModel.searchFlights(
-                                originCode: departure.airportCode,
-                                destinationCode: arrival.airportCode,
-                                departureDate: selectedDate
-                            )
-                            
-                            if viewModel.flights.isEmpty {
-                                alertMessage = "Flights not found. Try changing airports or the date of your trip"
-                                showAlert = true
-                                Haptics.error()
-                                return
-                            }
-                            
-                            Haptics.success()
-                            
-                            // Create Title: "Istanbul — Los Angeles"
-                            let title = "\(departure.city) — \(arrival.city)"
-                            
-                            // Navigate to next List View
-                            path.append(FlightPage.list(flights: viewModel.flights, title: title))
+                    Button {
+                        getTickets()
+                    } label: {
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .black))
+                        } else {
+                            Text("Get tickets")
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle())
+                    .disabled(viewModel.isLoading)
                     
                     Spacer()
                 }
@@ -146,6 +124,11 @@ struct FlightSearchView: View {
             .sheet(isPresented: $showDatePicker) {
                 DatePickerView(selectedDate: $selectedDate, selectedDateText: $selectedDateText, isDateSelected: $isDateSelected)
             }
+            .sheet(isPresented: $showPassengerPicker) {
+                PassengersSheetView(adultsCount: $adultsCount, childrenCount: $childrenCount) {
+                    clearPassengersCount()
+                }
+            }
             .alert("Error", isPresented: $showAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
@@ -160,7 +143,75 @@ struct FlightSearchView: View {
                 selectedDate = Date()
                 selectedDateText = "Travel dates"
                 isDateSelected = false
+                clearPassengersCount()
             }
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func clearPassengersCount() {
+        adultsCount = 1
+        childrenCount = 0
+    }
+    
+    private func getTickets() {
+        // Validation
+        guard let departure = departureAirport else {
+            alertMessage = "Departure airport is not selected"
+            showAlert = true
+            Haptics.error()
+            return
+        }
+        guard let arrival = arrivalAirport else {
+            alertMessage = "Arrival airport is not selected"
+            showAlert = true
+            Haptics.error()
+            return
+        }
+        if departure.city == arrival.city {
+            alertMessage = "The departure and arrival airports cannot be the same"
+            showAlert = true
+            Haptics.error()
+            return
+        }
+        if !isDateSelected {
+            alertMessage = "Flight date is not selected"
+            showAlert = true
+            Haptics.error()
+            return
+        }
+        if totalPassengersCount <= 0 {
+            alertMessage = "At least 1 passenger must be selected"
+            showAlert = true
+            Haptics.error()
+            return
+        }
+        
+        Task {
+            await viewModel.searchFlights(
+                originCode: departure.airportCode,
+                destinationCode: arrival.airportCode,
+                departureDate: selectedDate
+            )
+            
+            if viewModel.flights.isEmpty {
+                alertMessage = "Flights not found. Try changing airports or the date of your trip"
+                showAlert = true
+                Haptics.error()
+                return
+            }
+            
+            Haptics.success()
+            
+            // Create Title: "Istanbul — Los Angeles"
+            let title = "\(departure.city) — \(arrival.city)"
+            
+            // Navigate to FlightListView()
+            path.append(FlightPage.list(
+                flights: viewModel.flights,
+                title: title,
+                searchCountPassengers: totalPassengersCount
+            ))
         }
     }
 }
