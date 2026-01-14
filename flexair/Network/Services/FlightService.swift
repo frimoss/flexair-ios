@@ -23,7 +23,6 @@ final class FlightService {
     }
     
     // MARK: Search Flights
-    /// Searches for flights matching the criteria
     func searchFlights(
         originAirportCode: String,
         destinationAirportCode: String,
