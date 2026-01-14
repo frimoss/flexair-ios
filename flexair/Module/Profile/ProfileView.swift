@@ -15,7 +15,7 @@ struct ProfileView: View {
     @State private var showAlert = false
     
     var body: some View {
-        NavigationStack {
+        VStack {
             if let profile = authService.getUserProfile() {
                 Form {
                     Section {
@@ -84,27 +84,33 @@ struct ProfileView: View {
                     Section {
                         HStack {
                             Spacer()
-                            VStack(spacing: 8) {
+                            VStack(spacing: 12) {
                                 Image("icon")
                                     .resizable()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: 38, height: 38)
                                 
-                                Text("Flexair 1.0")
-                                .font(.system(size: 14, weight: .medium))
+                                Text("Flexair 1.52")
+                                    .font(.system(size: 16, weight: .medium))
                                     .foregroundStyle(.gray)
                                   
-                                VStack(spacing: 4) {
-                                    Text("Flight Booking DBMS")
-                                    Text("CMPE344 Project")
-                                    Text("22.12.2025")
+                                VStack(spacing: 8) {
+                                    Text("[Nikolai Piatnov](https://www.linkedin.com/in/piatnovn/)")
+                                    Text("[Mahan Mizani](https://www.linkedin.com/in/mahan-mizani-180486149/)")
+                                    Text("[Marcel Tshidibi Ngoyi](https://www.linkedin.com/in/marcel-ngoyi-470408374/)")
+                                    Text("[Maksim Kalmykov](https://www.linkedin.com/in/maksim-kalmykov-2243762b1/)")
+                                    
+                                    Text("")
+                                    
+                                    Text("[Give us a Star ⭐️ on GitHub](https://github.com/frimoss/flexair-ios)")
                                 }
-                                .font(.system(size: 13))
+                                .font(.system(size: 15))
                                 .foregroundStyle(.gray)
                             }
                             Spacer()
                         }
                     }
                     .listRowBackground(Color.clear)
+                    .padding(.top, 20)
                 }
                 .navigationTitle("Profile")
                 .navigationBarTitleDisplayMode(.inline)
