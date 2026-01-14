@@ -12,6 +12,8 @@ struct FlightBookingView: View {
     
     // MARK: - Public
     var flight: Flight
+    @State var searchCountPassengers: Int
+    
     @Binding var homeNavigationPath: NavigationPath
     @Binding var bookingNavigationPath: NavigationPath
     @Binding var tab: AppTab
@@ -20,6 +22,20 @@ struct FlightBookingView: View {
     @State private var selectedPassengers: [Passenger] = []
     @Environment(\.dismiss) private var dismiss
     
+    private var numberOfPassengers: Int {
+        if selectedPassengers.count > 0 {
+            return selectedPassengers.count
+        } else {
+            return searchCountPassengers
+        }
+    }
+    
+    private var numberOfPassengersTitle: String {
+        numberOfPassengers > 1
+            ? "for \(numberOfPassengers) passengers"
+            : "for 1 passenger"
+    }
+    
     private var passengerPrice: Int {
         return flight.flightPrice
             + (hasBaggage ? flight.baggagePrice : 0)
@@ -27,8 +43,8 @@ struct FlightBookingView: View {
     }
     
     private var totalPrice: Int {
-        let multiplier = selectedPassengers.count > 1
-            ? selectedPassengers.count
+        let multiplier = numberOfPassengers > 1
+            ? numberOfPassengers
             : 1
         
         return passengerPrice * multiplier
@@ -60,11 +76,7 @@ struct FlightBookingView: View {
                         Text("$\(totalPrice)")
                             .font(.system(size: 32, weight: .heavy))
                         
-                        let subtitle = selectedPassengers.count > 1
-                            ? "for \(selectedPassengers.count) passengers"
-                            : "for 1 passenger"
-                        
-                        Text(subtitle)
+                        Text(numberOfPassengersTitle)
                             .font(.system(size: titleSize, weight: .regular))
                             .foregroundStyle(.gray)
                     }

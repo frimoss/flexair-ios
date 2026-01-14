@@ -9,17 +9,27 @@ import SwiftUI
 
 struct FlightListItemView: View {
     
+    // MARK: - Public
     var flight: Flight
+    var searchCountPassengers: Int
+    
+    // MARK: - Private
+    private var price: Int {
+        return flight.flightPrice * searchCountPassengers
+    }
+    private var baggagePrice: Int {
+        return (flight.flightPrice + flight.baggagePrice) * searchCountPassengers
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top) {
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("$\(flight.price)")
+                    Text("$\(price)")
                         .font(.system(size: 25, weight: .heavy))
                     
-                    Text("$\(flight.flightPrice + flight.baggagePrice) including baggage 1×23 kg")
+                    Text("$\(baggagePrice) including baggage 1×23 kg")
                         .font(.system(size: 14, weight: .regular))
                         .padding(3)
                         .padding(.horizontal, 2)

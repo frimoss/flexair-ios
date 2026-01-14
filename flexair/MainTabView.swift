@@ -12,8 +12,8 @@ enum AppTab: Hashable {
 }
 
 enum FlightPage: Hashable {
-    case list(flights: [Flight], title: String)
-    case booking(flight: Flight)
+    case list(flights: [Flight], title: String, searchCountPassengers: Int)
+    case booking(flight: Flight, searchCountPassengers: Int)
 }
 
 struct MainTabView: View {
@@ -29,11 +29,19 @@ struct MainTabView: View {
                     FlightSearchView(path: $homeNavigationPath)
                     .navigationDestination(for: FlightPage.self) { page in
                         switch page {
-                        case .list(let flights, let title):
-                            FlightListView(flights: flights, title: title, path: $homeNavigationPath)
-                        case .booking(let flight):
+                            
+                        case .list(let flights, let title, let searchCountPassengers):
+                            FlightListView(
+                                flights: flights,
+                                title: title,
+                                searchCountPassengers: searchCountPassengers,
+                                path: $homeNavigationPath
+                            )
+                            
+                        case .booking(let flight, let searchCountPassengers):
                             FlightBookingView(
                                 flight: flight,
+                                searchCountPassengers: searchCountPassengers,
                                 homeNavigationPath: $homeNavigationPath,
                                 bookingNavigationPath: $bookingNavigationPath,
                                 tab: $selection

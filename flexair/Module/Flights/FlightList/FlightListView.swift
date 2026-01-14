@@ -12,6 +12,8 @@ struct FlightListView: View {
     // MARK: - Public
     let flights: [Flight]
     var title: String
+    var searchCountPassengers: Int
+    
     @Binding var path: NavigationPath
     
     // MARK: - Private
@@ -28,10 +30,18 @@ struct FlightListView: View {
                 ForEach(0..<6) { index in
                     ForEach(flights) { flight in
                         Button {
-                            path.append(FlightPage.booking(flight: flight))
+                            path.append(FlightPage.booking(
+                                flight: flight,
+                                searchCountPassengers: searchCountPassengers
+                            ))
+                            
                             Haptics.light()
+                            
                         } label: {
-                            FlightListItemView(flight: flight)
+                            FlightListItemView(
+                                flight: flight,
+                                searchCountPassengers: searchCountPassengers
+                            )
                         }
                         .padding()
                         .foregroundStyle(Constants.Colors.textPrimary)
