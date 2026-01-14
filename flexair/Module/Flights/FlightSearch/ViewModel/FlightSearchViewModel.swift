@@ -30,7 +30,6 @@ final class FlightSearchViewModel {
     // MARK: Fetch All Airports
     /// Loads all available airports
     func loadAirports() async {
-        isLoading = true
         errorMessage = nil
         
         do {
@@ -40,8 +39,6 @@ final class FlightSearchViewModel {
             errorMessage = "Failed to load airports"
             print("❌ Airport loading failed: \(error)")
         }
-        
-        isLoading = false
     }
     
     // MARK: Search Flights

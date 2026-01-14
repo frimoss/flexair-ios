@@ -78,7 +78,7 @@ struct LoginView: View {
                 }) {
                     if authService.isLoading {
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .progressViewStyle(CircularProgressViewStyle(tint: .black))
                     } else {
                         Text(isSignUp ? "Sign Up" : "Sign In")
                             .fontWeight(.semibold)
